@@ -200,19 +200,19 @@ const StaffListing: React.FC = () => {
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">Phone number</label>
-              <Input required type="text" placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+              <Input  type="text" placeholder="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">Employee ID</label>
-              <Input required type="text" placeholder="Enter your employee id" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
+              <Input  type="text" placeholder="Enter your employee id" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">Date of Birth</label>
-              <Input required type="text" placeholder="DD/MM/YYYY" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
+              <Input  type="text" placeholder="DD/MM/YYYY" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">Gender</label>
-              <Select required value={gender} onValueChange={setGender}>
+              <Select  value={gender} onValueChange={setGender}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select your gender" />
                 </SelectTrigger>
