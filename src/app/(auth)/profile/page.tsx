@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/ui/ui/input";
 import { Card } from "@/ui/ui/card";
@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@radix-ui/react-select";
 
+// Define the ProfilePage component
 const ProfilePage: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -152,6 +153,7 @@ const ProfilePage: React.FC = () => {
             <p className="text-red-500">{error}</p>
           ) : (
             <form className="grid grid-cols-2 gap-6">
+              {/* Form Fields */}
               <div>
                 <label className="block text-sm font-medium mb-2">
                   First Name
@@ -272,12 +274,6 @@ const ProfilePage: React.FC = () => {
                 </Select>
                 {formData?.genders?.length > 0
                   ? formData.genders.map((item: any) => (
-                      // <SelectItem
-                      //   key={item.Key || item.key}
-                      //   value={item.Value || item.value}
-                      // >
-                      //   {item.Value || item.value}
-                      // </SelectItem>
                       <h1 key={item.Key}>{item.Value}</h1>
                     ))
                   : null}
@@ -322,24 +318,13 @@ const ProfilePage: React.FC = () => {
                 <label className="block text-sm font-medium mb-2">
                   Languages
                 </label>
-                {/* <Input
+                <Input
                   type="text"
                   name="languages"
                   value={formData.languages}
                   onChange={handleInputChange}
                   placeholder="Languages"
-                /> */}
-                {formData?.language?.length > 0
-                  ? formData.language.map((item: any) => (
-                      // <SelectItem
-                      //   key={item.Key || item.key}
-                      //   value={item.Value || item.value}
-                      // >
-                      //   {item.Value || item.value}
-                      // </SelectItem>
-                      <h1 key={item.Key}>{item.Value}</h1>
-                    ))
-                  : null}
+                />
               </div>
             </form>
           )}
@@ -353,4 +338,12 @@ const ProfilePage: React.FC = () => {
     </div>
   );
 };
-export default ProfilePage;
+
+// Wrap ProfilePage in Suspense and export it
+export default function Profile() {
+  return (
+    <Suspense fallback={<div>Loading profile...</div>}>
+      <ProfilePage />
+    </Suspense>
+  );
+}
