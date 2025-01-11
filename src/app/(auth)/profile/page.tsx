@@ -53,8 +53,6 @@ const ProfilePage: React.FC = () => {
           const response = await axios.get<any>(`/api/staff/${id}`);
           console.log(response.data);
 
-          console.log("API Response:", response.data);
-
           // Map response to formData structure
           setFormData({
             firstName: response.data.profile.firstName || "",
@@ -74,7 +72,6 @@ const ProfilePage: React.FC = () => {
             genders: response.data.dropdown.gender || [],
             language: response.data.dropdown.language || [],
           });
-          console.log(response.data.dropdown);
         } catch (error) {
           console.error("Error fetching user data:", error);
           setError("Error fetching user data");
@@ -91,14 +88,36 @@ const ProfilePage: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleLanguageChange = (value: string) => {
     setFormData((prev) => ({ ...prev, languages: value }));
   };
-  
 
   // Handle select change for gender
   const handleGenderChange = (value: string) => {
     setFormData((prev) => ({ ...prev, gender: value }));
+  };
+
+  // Handle Save button click
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      // Send the updated formData to the server
+      const response = await axios.put(`/api/staff?id=${id}`, {formData:formData, id:id});
+      console.log("hi");
+      
+
+      if (response.status === 200) {
+        alert('Profile updated successfully');
+        // Optionally, you can redirect the user after updating
+        router.push("/profile"); // Adjust this to the page where you want to navigate
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Failed to update profile');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -106,12 +125,12 @@ const ProfilePage: React.FC = () => {
       <Card className="max-w-6xl mx-auto shadow-lg rounded-lg p-12">
         {/* Profile Header */}
         <div className="flex items-center gap-6 mb-10">
-  <img
-    src="https://static-00.iconduck.com/assets.00/user-avatar-icon-512x512-vufpcmdn.png" // Use the provided URL
-    alt="Profile Avatar"
-    className="w-20 h-20 rounded-full object-cover"
-  />
-  <div>
+          <img
+            src="https://static-00.iconduck.com/assets.00/user-avatar-icon-512x512-vufpcmdn.png" // Use the provided URL
+            alt="Profile Avatar"
+            className="w-20 h-20 rounded-full object-cover"
+          />
+          <div>
             <h2 className="text-2xl font-semibold">
               {formData.firstName} {formData.lastName}
             </h2>
@@ -150,211 +169,187 @@ const ProfilePage: React.FC = () => {
 
         {/* Personal Information Form */}
         <div>
-  {/* Save and Cancel Buttons */}
-  <div className="flex justify-end gap-6 mt-10">
-    <Button variant="outline">Cancel</Button>
-    <Button>Save</Button>
-  </div>
-  <h3 className="text-xl font-semibold mb-6">Personal Information</h3>
-  {loading ? (
-    <p>Loading...</p>
-  ) : error ? (
-    <p className="text-red-500">{error}</p>
-  ) : (
-    <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {/* Form Fields */}
-      <div>
-        <label className="block text-sm font-medium mb-2">First Name</label>
-        <Input
-          type="text"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleInputChange}
-          placeholder="First Name"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-2">Last Name</label>
-        <Input
-          type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleInputChange}
-          placeholder="Last Name"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-2">Contact Number</label>
-        <Input
-          type="text"
-          name="contactNumber"
-          value={formData.contactNumber}
-          onChange={handleInputChange}
-          placeholder="Contact Number"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-2">Gmail ID</label>
-        <Input
-          type="text"
-          name="gmail"
-          value={formData.gmail}
-          onChange={handleInputChange}
-          placeholder="Gmail ID"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-2">Employee ID</label>
-        <Input
-          type="text"
-          name="employeeId"
-          value={formData.employeeId}
-          onChange={handleInputChange}
-          placeholder="Employee ID"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-2">Marital Status</label>
-        <Input
-          type="text"
-          name="maritalStatus"
-          value={formData.maritalStatus}
-          onChange={handleInputChange}
-          placeholder="Marital Status"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-2">Role</label>
-        <Input
-          type="text"
-          name="role"
-          value={formData.role}
-          onChange={handleInputChange}
-          placeholder="Role"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-2">Department</label>
-        <Input
-          type="text"
-          name="department"
-          value={formData.department}
-          onChange={handleInputChange}
-          placeholder="Department"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-2">Date of Birth</label>
-        <Input
-          type="text"
-          name="dob"
-          value={formData.dob}
-          onChange={handleInputChange}
-          placeholder="DD/MM/YYYY"
-        />
-      </div>
-     
-      <div>
-        <label className="block text-sm font-medium mb-2">Nationality</label>
-        <Input
-          type="text"
-          name="nationality"
-          value={formData.nationality}
-          onChange={handleInputChange}
-          placeholder="Nationality"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-2">Address</label>
-        <Input
-          type="text"
-          name="address"
-          value={formData.address}
-          onChange={handleInputChange}
-          placeholder="Address"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-2">Designation</label>
-        <Input
-          type="text"
-          name="designation"
-          value={formData.designation}
-          onChange={handleInputChange}
-          placeholder="Designation"
-        />
-      </div>
-     
-      <div>
-  <label className="block text-sm font-medium mb-2">Gender</label>
-  <Select
-    value={formData.gender}
-    onValueChange={handleGenderChange}
-    required
-  >
-    <SelectTrigger>
-      <SelectValue placeholder="Select your gender" />
-    </SelectTrigger>
-    <SelectContent>
-      {formData?.genders?.length > 0
-        ? formData.genders.map((item: any) => (
-            <SelectItem key={item.Key} value={item.Value}>
-              {item.Value}
-            </SelectItem>
-          ))
-        : null}
-    </SelectContent>
-  </Select>
-  {/* Display selected gender in an Input */}
-  <div className="mt-2">
-    <label className="block text-sm font-medium mb-2">Selected Gender</label>
-    <Input
-      type="text"
-      name="gender"
-      value={formData.gender}
-      readOnly
-      placeholder="Selected Gender"
-    />
-  </div>
-</div>
-
-<div>
-  <label className="block text-sm font-medium mb-2">Languages</label>
-  <Select
-    value={formData.languages}
-    onValueChange={handleLanguageChange}
-    required
-  >
-    <SelectTrigger>
-      <SelectValue placeholder="Select your languages" />
-    </SelectTrigger>
-    <SelectContent>
-      {formData?.language?.length > 0
-        ? formData.language.map((item: any) => (
-            <SelectItem key={item.Key} value={item.Value}>
-              {item.Value}
-            </SelectItem>
-          ))
-        : null}
-    </SelectContent>
-  </Select>
-  {/* Display selected languages in an Input */}
-  <div className="mt-2">
-    <label className="block text-sm font-medium mb-2">Selected Languages</label>
-    <Input
-      type="text"
-      name="languages"
-      value={formData.languages}
-      readOnly
-      placeholder="Selected Languages"
-    />
-  </div>
-</div>
-
-    </form>
-  )}
-</div>
-
+          {/* Save and Cancel Buttons */}
+          <div className="flex justify-end gap-6 mt-10">
+            <Button variant="outline">Cancel</Button>
+            <Button onClick={handleSave} disabled={loading}>
+              {loading ? "Saving..." : "Save"}
+            </Button>
+          </div>
+          <h3 className="text-xl font-semibold mb-6">Personal Information</h3>
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p className="text-red-500">{error}</p>
+          ) : (
+            <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Form Fields */}
+              <div>
+                <label className="block text-sm font-medium mb-2">First Name</label>
+                <Input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  placeholder="First Name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Last Name</label>
+                <Input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  placeholder="Last Name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Contact Number</label>
+                <Input
+                  type="text"
+                  name="contactNumber"
+                  value={formData.contactNumber}
+                  onChange={handleInputChange}
+                  placeholder="Contact Number"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Gmail ID</label>
+                <Input
+                  type="text"
+                  name="gmail"
+                  value={formData.gmail}
+                  onChange={handleInputChange}
+                  placeholder="Gmail ID"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Employee ID</label>
+                <Input
+                  type="text"
+                  name="employeeId"
+                  value={formData.employeeId}
+                  onChange={handleInputChange}
+                  placeholder="Employee ID"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Marital Status</label>
+                <Input
+                  type="text"
+                  name="maritalStatus"
+                  value={formData.maritalStatus}
+                  onChange={handleInputChange}
+                  placeholder="Marital Status"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Role</label>
+                <Input
+                  type="text"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleInputChange}
+                  placeholder="Role"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Department</label>
+                <Input
+                  type="text"
+                  name="department"
+                  value={formData.department}
+                  onChange={handleInputChange}
+                  placeholder="Department"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Date of Birth</label>
+                <Input
+                  type="text"
+                  name="dob"
+                  value={formData.dob}
+                  onChange={handleInputChange}
+                  placeholder="DD/MM/YYYY"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Nationality</label>
+                <Input
+                  type="text"
+                  name="nationality"
+                  value={formData.nationality}
+                  onChange={handleInputChange}
+                  placeholder="Nationality"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Address</label>
+                <Input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  placeholder="Address"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Designation</label>
+                <Input
+                  type="text"
+                  name="designation"
+                  value={formData.designation}
+                  onChange={handleInputChange}
+                  placeholder="Designation"
+                />
+              </div>
+              {/* Gender and Languages Select */}
+              <div>
+                <label className="block text-sm font-medium mb-2">Gender</label>
+                <Select
+                  value={formData.gender}
+                  onValueChange={handleGenderChange}
+                  required
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your gender" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {formData?.genders?.length > 0
+                      ? formData.genders.map((item: any) => (
+                          <SelectItem key={item.Key} value={item.Value}>
+                            {item.Value}
+                          </SelectItem>
+                        ))
+                      : null}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Languages</label>
+                <Select
+                  value={formData.languages}
+                  onValueChange={handleLanguageChange}
+                  required
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your languages" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {formData?.language?.length > 0
+                      ? formData.language.map((item: any) => (
+                          <SelectItem key={item.Key} value={item.Value}>
+                            {item.Value}
+                          </SelectItem>
+                        ))
+                      : null}
+                  </SelectContent>
+                </Select>
+              </div>
+            </form>
+          )}
+        </div>
       </Card>
     </div>
   );
@@ -368,5 +363,3 @@ export default function Profile() {
     </Suspense>
   );
 }
-
-

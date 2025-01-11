@@ -255,7 +255,19 @@ const StaffListing: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
-
+            <div>
+              <label className="block text-sm font-medium mb-2">Gender</label>
+              <Select value={gender} onValueChange={setGender}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your gender" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="male">Male</SelectItem>
+                  <SelectItem value="female">Female</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <div>
               <label className="block text-sm font-medium mb-2">
                 Nationality
