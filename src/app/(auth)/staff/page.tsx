@@ -261,14 +261,15 @@ const StaffListing: React.FC = () => {
     />
   </div>
   <div>
-    <label className="block text-sm font-medium mb-2">Address</label>
-    <Input
-      type="text"
-      placeholder="Enter address here"
-      value={address}
-      onChange={(e) => setAddress(e.target.value)}
-    />
-  </div>
+  <label className="block text-sm font-medium mb-2">Address</label>
+  <textarea
+    placeholder="Enter address here"
+    value={address}
+    onChange={(e) => setAddress(e.target.value)}
+    className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+</div>
+
   <div>
     <label className="block text-sm font-medium mb-2">Designation</label>
     <Input

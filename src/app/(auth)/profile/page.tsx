@@ -75,6 +75,10 @@ const ProfilePage: React.FC = () => {
       fetchUserData();
     }
   }, [id]);
+  const handletextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -350,14 +354,14 @@ const ProfilePage: React.FC = () => {
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Address
                 </label>
-                <Input
-                  type="text"
+                <textarea
                   name="address"
                   value={formData.address}
-                  onChange={handleInputChange}
+                  onChange={handletextareaChange}
                   placeholder="Address"
                 />
               </div>
+              
               <div>
               <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
   Designation
