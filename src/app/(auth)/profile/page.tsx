@@ -12,7 +12,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@radix-ui/react-select";
+} from "@/ui/ui/select";
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
