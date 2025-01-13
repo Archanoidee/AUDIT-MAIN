@@ -1,5 +1,5 @@
 "use client";
-
+import * as ToastPrimitive from '@radix-ui/react-toast';
 import React, { Suspense, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/ui/ui/input";
@@ -13,6 +13,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/ui/ui/select";
+const Toast = ({ title, description }: { title: string; description?: string }) => {
+  return (
+    <ToastPrimitive.Provider>
+      <ToastPrimitive.Root
+        className="bg-red-500 text-white p-4 rounded-lg shadow-md"
+        duration={5000}
+      >
+        <ToastPrimitive.Title className="font-bold">{title}</ToastPrimitive.Title>
+        {description && (
+          <ToastPrimitive.Description className="text-sm">{description}</ToastPrimitive.Description>
+        )}
+      </ToastPrimitive.Root>
+      <ToastPrimitive.Viewport className="fixed bottom-4 right-4 flex flex-col gap-2" />
+    </ToastPrimitive.Provider>
+  );
+};
+
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
@@ -134,52 +151,58 @@ const ProfilePage: React.FC = () => {
         </div>
 
         <div className="flex flex-wrap gap-8 border-b mb-10 text-lg">
-  <Button
-    variant="link"
-    className="py-3 px-6 text-blue-600 font-semibold border-b-4 border-blue-600 w-full sm:w-auto text-center"
+          <Button
+            variant="link"
+            className="py-3 px-6 text-blue-600 font-semibold border-b-4 border-blue-600 w-full sm:w-auto text-center"
+          >
+            Profile
+          </Button>
+          <Button
+            variant="link"
+            className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
+          >
+            Skill Management
+          </Button>
+          <Button
+            variant="link"
+            className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
+            onClick={() => router.push("/payroll")}
+          >
+            Payroll
+          </Button>
+          <Button
+            variant="link"
+            className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
+          >
+            Documents
+          </Button>
+        </div>
+
+        <div>
+        <div className="flex justify-end">
+  <Button 
+    variant="outline" 
+    onClick={() => router.push(`/staff`)} // Pass the staff ID in the URL
   >
-    Profile
-  </Button>
-  <Button
-    variant="link"
-    className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
-  >
-    Skill Management
-  </Button>
-  <Button
-    variant="link"
-    className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
-    onClick={() => router.push("/payroll")}
-  >
-    Payroll
-  </Button>
-  <Button
-    variant="link"
-    className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
-  >
-    Documents
+    Cancel
   </Button>
 </div>
 
-        <div>
-          <div className="flex justify-end gap-6 mt-10">
-            <Button variant="outline">Cancel</Button>
-            <Button onClick={handleSave} disabled={loading}>
-              {loading ? "Saving..." : "Save"}
-            </Button>
-          </div>
           <h3 className="text-xl font-semibold mb-6">Personal Information</h3>
+          
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
             <p className="text-red-500">{error}</p>
           ) : (
+            
             <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div>
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  First Name
+                  First Name<span className="text-red-600">*</span>
                 </label>
                 <Input
+                required
                   type="text"
                   name="firstName"
                   value={formData.firstName}
@@ -189,9 +212,10 @@ const ProfilePage: React.FC = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Last Name
+                  Last Name<span className="text-red-600">*</span>
                 </label>
                 <Input
+                required
                   type="text"
                   name="lastName"
                   value={formData.lastName}
@@ -199,6 +223,12 @@ const ProfilePage: React.FC = () => {
                   placeholder="Last Name"
                 />
               </div>
+              <div className="flex justify-end gap-6 mt-10">
+            
+            <Button onClick={handleSave} disabled={loading}>
+              {loading ? "Saving..." : "Save"}
+            </Button>
+          </div>
               <div>
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Contact Number
@@ -213,9 +243,10 @@ const ProfilePage: React.FC = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Gmail ID
+                  Email ID<span className="text-red-600">*</span>
                 </label>
                 <Input
+                required
                   type="text"
                   name="gmail"
                   value={formData.gmail}
@@ -228,6 +259,7 @@ const ProfilePage: React.FC = () => {
                   Employee ID
                 </label>
                 <Input
+               
                   type="text"
                   name="employeeId"
                   value={formData.employeeId}
@@ -248,7 +280,9 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">Role</label>
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  Role
+                </label>
                 <Input
                   type="text"
                   name="role"
@@ -271,31 +305,34 @@ const ProfilePage: React.FC = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Date of Birth
+                  Languages
                 </label>
-                <Input
-                  type="text"
-                  name="dob"
-                  value={formData.dateOfBirth}
-                  onChange={handleInputChange}
-                  placeholder="DD/MM/YYYY"
-                />
+
+                <Select
+                  value={formData.languages} // Current selected languages
+                  onValueChange={(value) =>
+                    value.length > 0 && handleLanguageChange(value)
+                  } // Update the value correctly
+                >
+                  <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <SelectValue placeholder="Select languages">
+                      {formData.languages || "Select languages"}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {formData.language?.map((item: any) => (
+                      <SelectItem key={item.Key} value={item.Value}>
+                        {item.Value}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Nationality
+                  Gender
                 </label>
-                <Input
-                  type="text"
-                  name="nationality"
-                  value={formData.nationality}
-                  onChange={handleInputChange}
-                  placeholder="Nationality"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">Gender</label>
-                
+
                 <Select
                   value={formData.gender} // This should be the current gender value
                   onValueChange={(value) =>
@@ -320,36 +357,30 @@ const ProfilePage: React.FC = () => {
                   </SelectContent>
                 </Select>
               </div>
-
               <div>
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Languages
+                  Date of Birth
                 </label>
-                
-                <Select
-                  value={formData.languages} // Current selected languages
-                  onValueChange={(value) =>
-                    value.length > 0 && handleLanguageChange(value)
-                  } // Update the value correctly
-                >
-                  <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <SelectValue placeholder="Select languages">
-                      {formData.languages || "Select languages"}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {formData.language?.map((item: any) => (
-                      <SelectItem key={item.Key} value={item.Value}>
-                        {item.Value}
-                        
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                
+                <Input
+                  type="text"
+                  name="dateOfBirth"
+                  value={formData.dateOfBirth}
+                  onChange={handleInputChange}
+                  placeholder="DD/MM/YYYY"
+                />
               </div>
-              
-              
+              <div>
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  Nationality
+                </label>
+                <Input
+                  type="text"
+                  name="nationality"
+                  value={formData.nationality}
+                  onChange={handleInputChange}
+                  placeholder="Nationality"
+                />
+              </div>
               <div>
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Address
@@ -361,12 +392,10 @@ const ProfilePage: React.FC = () => {
                   placeholder="Address"
                 />
               </div>
-              
               <div>
-              <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-  Designation
-</label>
-
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  Designation
+                </label>
                 <Input
                   type="text"
                   name="designation"
@@ -375,8 +404,6 @@ const ProfilePage: React.FC = () => {
                   placeholder="Designation"
                 />
               </div>
-
-             
             </form>
           )}
         </div>
@@ -384,7 +411,6 @@ const ProfilePage: React.FC = () => {
     </div>
   );
 };
-
 export default function Profile() {
   return (
     <Suspense fallback={<div>Loading profile...</div>}>

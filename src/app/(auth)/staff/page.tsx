@@ -180,35 +180,50 @@ const StaffListing: React.FC = () => {
         Close
       </Button>
     </div>
-   <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSave}>
+    <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSave}>
   <div>
-    <label className="block text-sm font-medium mb-2">First Name</label>
+    <label className="block text-sm font-medium mb-2">
+      First Name <span className="text-red-600">*</span>
+    </label>
     <Input
       required
       type="text"
       placeholder="First Name"
       value={firstName}
       onChange={(e) => setFirstName(e.target.value)}
+      className={`${
+        !firstName ? "border-red-600 focus:ring-red-500" : ""
+      } border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
     />
   </div>
   <div>
-    <label className="block text-sm font-medium mb-2">Last Name</label>
+    <label className="block text-sm font-medium mb-2">
+      Last Name <span className="text-red-600">*</span>
+    </label>
     <Input
       required
       type="text"
       placeholder="Last Name"
       value={lastName}
       onChange={(e) => setLastName(e.target.value)}
+      className={`${
+        !lastName ? "border-red-600 focus:ring-red-500" : ""
+      } border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
     />
   </div>
   <div>
-    <label className="block text-sm font-medium mb-2">Email</label>
+    <label className="block text-sm font-medium mb-2">
+      Email <span className="text-red-600">*</span>
+    </label>
     <Input
       required
       type="email"
       placeholder="Email"
       value={email}
       onChange={(e) => setEmail(e.target.value)}
+      className={`${
+        !email ? "border-red-600 focus:ring-red-500" : ""
+      } border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
     />
   </div>
   <div>
@@ -218,6 +233,7 @@ const StaffListing: React.FC = () => {
       placeholder="Phone Number"
       value={phone}
       onChange={(e) => setPhone(e.target.value)}
+      className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
   </div>
   <div>
@@ -227,6 +243,7 @@ const StaffListing: React.FC = () => {
       placeholder="Enter your id"
       value={employeeId}
       onChange={(e) => setEmployeeId(e.target.value)}
+      className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
   </div>
   <div>
@@ -236,12 +253,13 @@ const StaffListing: React.FC = () => {
       placeholder="DD/MM/YYYY"
       value={dateOfBirth}
       onChange={(e) => setDateOfBirth(e.target.value)}
+      className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
   </div>
   <div>
     <label className="block text-sm font-medium mb-2">Gender</label>
     <Select value={gender} onValueChange={setGender}>
-      <SelectTrigger>
+      <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
         <SelectValue placeholder="Select your gender" />
       </SelectTrigger>
       <SelectContent>
@@ -258,18 +276,18 @@ const StaffListing: React.FC = () => {
       placeholder="Enter your nationality"
       value={nationality}
       onChange={(e) => setNationality(e.target.value)}
+      className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
   </div>
   <div>
-  <label className="block text-sm font-medium mb-2">Address</label>
-  <textarea
-    placeholder="Enter address here"
-    value={address}
-    onChange={(e) => setAddress(e.target.value)}
-    className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  />
-</div>
-
+    <label className="block text-sm font-medium mb-2">Address</label>
+    <textarea
+      placeholder="Enter address here"
+      value={address}
+      onChange={(e) => setAddress(e.target.value)}
+      className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
   <div>
     <label className="block text-sm font-medium mb-2">Designation</label>
     <Input
@@ -277,12 +295,13 @@ const StaffListing: React.FC = () => {
       placeholder="Enter your designation"
       value={designation}
       onChange={(e) => setDesignation(e.target.value)}
+      className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
   </div>
   <div>
     <label className="block text-sm font-medium mb-2">Languages Preferences</label>
     <Select value={languages} onValueChange={setLanguages}>
-      <SelectTrigger>
+      <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
         <SelectValue placeholder="Select your languages" />
       </SelectTrigger>
       <SelectContent>
@@ -296,7 +315,7 @@ const StaffListing: React.FC = () => {
   </div>
 
   <div className="flex justify-end gap-4 mt-6">
-    <Button variant="outline" onClick={() => console.log('Cancel clicked')}>
+    <Button variant="outline" onClick={() => console.log("Cancel clicked")}>
       Cancel
     </Button>
     <Button className="bg-blue-600 text-white hover:bg-blue-700" type="submit">
@@ -304,6 +323,7 @@ const StaffListing: React.FC = () => {
     </Button>
   </div>
 </form>
+
   </div>
       )}
     </div>

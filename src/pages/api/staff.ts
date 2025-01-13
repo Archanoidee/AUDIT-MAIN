@@ -54,7 +54,7 @@ export default async function handler(
             employeeId,
             gender,
             languages,
-            dateOfBirth:"2022-01-01",
+            dateOfBirth,
             maritalStatus: "Empty", // Static example data
             nationality,
             address,
