@@ -20,95 +20,130 @@ const Dashboard = () => {
   return (
     <div>
 <Button
-                  
-                  className="py-3 px-6 text-blue-600 hover:text-blue-600"
-                  onClick={() => router.push("/login")}
-                >
-                  Logout
-                </Button>
+  className="py-3 px-6 text-white bg-blue-600 rounded-full shadow-md transform transition-all duration-300 ease-in-out hover:bg-blue-700 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+  onClick={() => router.push("/login")}
+>
+  Logout
+</Button>
 
-    <div className="flex flex-wrap justify-center gap-6 p-6">
-     
-      {/* Card for Staff */}
-      <Card className="w-64 border rounded-lg shadow-md">
-        <CardHeader>
-          <div className="flex justify-center mb-4">
-            {UserIcon && createElement(UserIcon, { size: 32, className: "text-blue-500" })}
-          </div>
-          <CardTitle className="text-center">Staff</CardTitle>
-          <CardDescription className="text-center">
-            Manage and view staff information with ease.
-          </CardDescription>
-        </CardHeader>
-        <CardFooter className="flex justify-center">
-          <Button onClick={() => (window.location.href = "/staff")}>Show</Button>
-        </CardFooter>
-      </Card>
 
-      {/* Card for Project */}
-      <Card className="w-64 border rounded-lg shadow-md">
-        <CardHeader>
-          <div className="flex justify-center mb-4">
-            {FolderIcon && createElement(FolderIcon, { size: 32, className: "text-blue-500" })}
-          </div>
-          <CardTitle className="text-center">Project</CardTitle>
-          <CardDescription className="text-center">
-            Explore and manage ongoing projects seamlessly.
-          </CardDescription>
-        </CardHeader>
-        <CardFooter className="flex justify-center">
-          <Button onClick={() => (window.location.href = "/project")}>Show</Button>
-        </CardFooter>
-      </Card>
+                <div className="flex flex-wrap justify-center gap-8 p-8">
+  {/* Card for Staff */}
+  <Card className="w-72 border border-gray-200 rounded-xl shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
+    <CardHeader>
+      <div className="flex justify-center mb-6">
+        {UserIcon && createElement(UserIcon, { size: 40, className: "text-blue-500" })}
+      </div>
+      <CardTitle className="text-xl font-semibold text-center text-gray-800">
+        Staff
+      </CardTitle>
+      <CardDescription className="text-center text-gray-600 text-sm">
+        Manage and view staff information with ease.
+      </CardDescription>
+    </CardHeader>
+    <CardFooter className="flex justify-center">
+      <Button
+        onClick={() => (window.location.href = "/staff")}
+        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
+      >
+        Show
+      </Button>
+    </CardFooter>
+  </Card>
 
-      {/* Card for Work */}
-      <Card className="w-64 border rounded-lg shadow-md">
-        <CardHeader>
-          <div className="flex justify-center mb-4">
-            {BriefcaseIcon && createElement(BriefcaseIcon, { size: 32, className: "text-blue-500" })}
-          </div>
-          <CardTitle className="text-center">Work</CardTitle>
-          <CardDescription className="text-center">
-            Get in touch with our team and collaborate.
-          </CardDescription>
-        </CardHeader>
-        <CardFooter className="flex justify-center">
-          <Button onClick={() => (window.location.href = "/work")}>Show</Button>
-        </CardFooter>
-      </Card>
+  {/* Card for Project */}
+  <Card className="w-72 border border-gray-200 rounded-xl shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
+    <CardHeader>
+      <div className="flex justify-center mb-6">
+        {FolderIcon && createElement(FolderIcon, { size: 40, className: "text-blue-500" })}
+      </div>
+      <CardTitle className="text-xl font-semibold text-center text-gray-800">
+        Project
+      </CardTitle>
+      <CardDescription className="text-center text-gray-600 text-sm">
+        Explore and manage ongoing projects seamlessly.
+      </CardDescription>
+    </CardHeader>
+    <CardFooter className="flex justify-center">
+      <Button
+        onClick={() => (window.location.href = "/project")}
+        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
+      >
+        Show
+      </Button>
+    </CardFooter>
+  </Card>
 
-      {/* Card for Organization */}
-      <Card className="w-64 border rounded-lg shadow-md">
-        <CardHeader>
-          <div className="flex justify-center mb-4">
-            {NetworkIcon && createElement(NetworkIcon, { size: 32, className: "text-blue-500" })}
-          </div>
-          <CardTitle className="text-center">Organization</CardTitle>
-          <CardDescription className="text-center">
-            Explore and manage ongoing projects seamlessly.
-          </CardDescription>
-        </CardHeader>
-        <CardFooter className="flex justify-center">
-          <Button onClick={() => (window.location.href = "/organization")}>Show</Button>
-        </CardFooter>
-      </Card>
+  {/* Card for Work */}
+  <Card className="w-72 border border-gray-200 rounded-xl shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
+    <CardHeader>
+      <div className="flex justify-center mb-6">
+        {BriefcaseIcon && createElement(BriefcaseIcon, { size: 40, className: "text-blue-500" })}
+      </div>
+      <CardTitle className="text-xl font-semibold text-center text-gray-800">
+        Work
+      </CardTitle>
+      <CardDescription className="text-center text-gray-600 text-sm">
+        Get in touch with our team and collaborate.
+      </CardDescription>
+    </CardHeader>
+    <CardFooter className="flex justify-center">
+      <Button
+        onClick={() => (window.location.href = "/work")}
+        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
+      >
+        Show
+      </Button>
+    </CardFooter>
+  </Card>
 
-      {/* Card for Contact */}
-      <Card className="w-64 border rounded-lg shadow-md">
-        <CardHeader>
-          <div className="flex justify-center mb-4">
-            {MailIcon && createElement(MailIcon, { size: 32, className: "text-blue-500" })}
-          </div>
-          <CardTitle className="text-center">Contact</CardTitle>
-          <CardDescription className="text-center">
-            Explore and manage ongoing projects seamlessly.
-          </CardDescription>
-        </CardHeader>
-        <CardFooter className="flex justify-center">
-          <Button onClick={() => (window.location.href = "/contact")}>Show</Button>
-        </CardFooter>
-      </Card>
-    </div>
+  {/* Card for Organization */}
+  <Card className="w-72 border border-gray-200 rounded-xl shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
+    <CardHeader>
+      <div className="flex justify-center mb-6">
+        {NetworkIcon && createElement(NetworkIcon, { size: 40, className: "text-blue-500" })}
+      </div>
+      <CardTitle className="text-xl font-semibold text-center text-gray-800">
+        Organization
+      </CardTitle>
+      <CardDescription className="text-center text-gray-600 text-sm">
+        Explore and manage ongoing projects seamlessly.
+      </CardDescription>
+    </CardHeader>
+    <CardFooter className="flex justify-center">
+      <Button
+        onClick={() => (window.location.href = "/organization")}
+        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
+      >
+        Show
+      </Button>
+    </CardFooter>
+  </Card>
+
+  {/* Card for Contact */}
+  <Card className="w-72 border border-gray-200 rounded-xl shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
+    <CardHeader>
+      <div className="flex justify-center mb-6">
+        {MailIcon && createElement(MailIcon, { size: 40, className: "text-blue-500" })}
+      </div>
+      <CardTitle className="text-xl font-semibold text-center text-gray-800">
+        Contact
+      </CardTitle>
+      <CardDescription className="text-center text-gray-600 text-sm">
+        Get in touch with us for further information.
+      </CardDescription>
+    </CardHeader>
+    <CardFooter className="flex justify-center">
+      <Button
+        onClick={() => (window.location.href = "/contact")}
+        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
+      >
+        Show
+      </Button>
+    </CardFooter>
+  </Card>
+</div>
+
     </div>
   );
 };

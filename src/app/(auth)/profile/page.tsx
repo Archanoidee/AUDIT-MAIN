@@ -112,9 +112,8 @@ const ProfilePage: React.FC = () => {
       setLoading(false);
     }
   };
-
   return (
-    <div className="min-h-screen bg-gray-50 p-10">
+    <div className="min-h-screen bg-gray-50 p-10 h-screen overflow-y-auto ">
       <Card className="max-w-6xl mx-auto shadow-lg rounded-lg p-12">
         <div className="flex items-center gap-6 mb-10">
           <img
@@ -173,7 +172,7 @@ const ProfilePage: React.FC = () => {
           ) : (
             <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   First Name
                 </label>
                 <Input
@@ -185,7 +184,7 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Last Name
                 </label>
                 <Input
@@ -197,7 +196,7 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Contact Number
                 </label>
                 <Input
@@ -209,7 +208,7 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Gmail ID
                 </label>
                 <Input
@@ -221,7 +220,7 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Employee ID
                 </label>
                 <Input
@@ -233,7 +232,7 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Marital Status
                 </label>
                 <Input
@@ -245,7 +244,7 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Role</label>
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">Role</label>
                 <Input
                   type="text"
                   name="role"
@@ -255,7 +254,7 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Department
                 </label>
                 <Input
@@ -267,7 +266,7 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Date of Birth
                 </label>
                 <Input
@@ -279,7 +278,7 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Nationality
                 </label>
                 <Input
@@ -291,7 +290,61 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">Gender</label>
+                <h1>{formData.gender}</h1>
+                <Select
+                  value={formData.gender} // This should be the current gender value
+                  onValueChange={(value) =>
+                    value.length > 0 && handleGenderChange(value)
+                  } // Update the value correctly
+                >
+                  <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <SelectValue placeholder="Select your gender">
+                      {formData.gender || "Select your gender"}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {formData.genders.map((item: any) => (
+                      <SelectItem
+                        key={item.Key}
+                        value={item.Value}
+                        className="border-b border-gray-200 px-4 py-2 hover:bg-gray-300 cursor-pointer"
+                      >
+                        {item.Value}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  Languages
+                </label>
+                <h1>{formData.languages}</h1>
+                <Select
+                  value={formData.languages} // Current selected languages
+                  onValueChange={(value) =>
+                    value.length > 0 && handleLanguageChange(value)
+                  } // Update the value correctly
+                >
+                  <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <SelectValue placeholder="Select languages">
+                      {formData.languages || "Select languages"}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {formData.language?.map((item: any) => (
+                      <SelectItem key={item.Key} value={item.Value}>
+                        {item.Value}
+                        
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Address
                 </label>
                 <Input
@@ -303,9 +356,10 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">
-                  Designation
-                </label>
+              <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+  Designation
+</label>
+
                 <Input
                   type="text"
                   name="designation"
@@ -315,54 +369,7 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">Gender</label>
-                <h1>{formData.gender}</h1>
-                <Select
-                  value={formData.gender} // This should be the current gender value
-                  onValueChange={(value) =>
-                    value.length > 0 && handleGenderChange(value)
-                  } // Update the value correctly
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your gender">
-                      {formData.gender || "Select your gender"}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {formData.genders.map((item: any) => (
-                      <SelectItem key={item.Key} value={item.Value}>
-                        {item.Value}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Languages
-                </label>
-                <h1>{formData.languages}</h1>
-                <Select
-                  value={formData.languages} // Current selected languages
-                  onValueChange={(value) =>
-                    value.length > 0 && handleLanguageChange(value)
-                  } // Update the value correctly
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select languages">
-                      {formData.languages || "Select languages"}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {formData.language?.map((item: any) => (
-                      <SelectItem key={item.Key} value={item.Value}>
-                        {item.Value}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+             
             </form>
           )}
         </div>
