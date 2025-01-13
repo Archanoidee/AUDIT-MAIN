@@ -52,6 +52,8 @@ export default async function handler(
             firstName,
             lastName,
             employeeId,
+            gender,
+            languages,
             dateOfBirth,
             maritalStatus: "Empty", // Static example data
             nationality,

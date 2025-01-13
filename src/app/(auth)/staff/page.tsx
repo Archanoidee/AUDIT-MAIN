@@ -59,7 +59,7 @@ const StaffListing: React.FC = () => {
   const [nationality, setNationality] = useState("");
   const [address, setAddress] = useState("");
   const [designation, setDesignation] = useState("");
-  const [languages, setLanguages] = useState<string[]>([]);
+  const [languages, setLanguages] = useState("");
 
   useEffect(() => {
     // Fetch staff data when the component mounts
@@ -167,162 +167,140 @@ const StaffListing: React.FC = () => {
 
       {/* Full-page Sidebar */}
       {isSidebarOpen && (
-        <div className="fixed inset-0 bg-white z-50 flex flex-col p-6 overflow-y-auto">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-semibold">Personal Information</h3>
-            <Button variant="outline" onClick={closeSidebar}>
-              Close
-            </Button>
-          </div>
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                First Name
-              </label>
-              <Input
-                required
-                type="text"
-                placeholder="First Name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Last Name
-              </label>
-              <Input
-                required
-                type="text"
-                placeholder="Last Name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
-              <Input
-                required
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Phone number
-              </label>
-              <Input
-                type="text"
-                placeholder="Phone Number"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Employee ID
-              </label>
-              <Input
-                type="text"
-                placeholder="Enter your employee id"
-                value={employeeId}
-                onChange={(e) => setEmployeeId(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Date of Birth
-              </label>
-              <Input
-                type="text"
-                placeholder="DD/MM/YYYY"
-                value={dateOfBirth}
-                onChange={(e) => setDateOfBirth(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Gender</label>
-              <Select value={gender} onValueChange={setGender}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your gender" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="male">Male</SelectItem>
-                  <SelectItem value="female">Female</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Gender</label>
-              <Select value={gender} onValueChange={setGender}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your gender" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="male">Male</SelectItem>
-                  <SelectItem value="female">Female</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Nationality
-              </label>
-              <Input
-                type="text"
-                placeholder="Enter your nationality"
-                value={nationality}
-                onChange={(e) => setNationality(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Address</label>
-              <Input
-                type="text"
-                placeholder="Enter full address here"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Designation
-              </label>
-              <Input
-                type="text"
-                placeholder="Enter your designation"
-                value={designation}
-                onChange={(e) => setDesignation(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Languages Preferences
-              </label>
-              <Input
-                type="text"
-                placeholder="Select your preferred languages"
-                value={languages.join(", ")}
-                onChange={(e) => setLanguages(e.target.value.split(", "))}
-              />
-            </div>
-          </form>
-          <div className="flex justify-end gap-4 mt-6">
-            <Button variant="outline" onClick={closeSidebar}>
-              Cancel
-            </Button>
-            <Button
-              className="bg-blue-600 text-white hover:bg-blue-700"
-              onClick={handleSave}
-            >
-              Save
-            </Button>
-          </div>
-        </div>
+  <div className="fixed top-0 right-0 w-full max-w-md h-full bg-white z-50 flex flex-col p-6 overflow-y-auto shadow-lg">
+    <div className="flex justify-between items-center mb-6">
+      <h3 className="text-xl font-semibold">Personal Information</h3>
+      <Button variant="outline" onClick={closeSidebar}>
+        Close
+      </Button>
+    </div>
+    <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label className="block text-sm font-medium mb-2">First Name</label>
+        <Input
+          required
+          type="text"
+          placeholder="First Name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Last Name</label>
+        <Input
+          required
+          type="text"
+          placeholder="Last Name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Email</label>
+        <Input
+          required
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Phone number</label>
+        <Input
+          type="text"
+          placeholder="Phone Number"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Employee ID</label>
+        <Input
+          type="text"
+          placeholder="Enter your id"
+          value={employeeId}
+          onChange={(e) => setEmployeeId(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Date of Birth</label>
+        <Input
+          type="text"
+          placeholder="DD/MM/YYYY"
+          value={dateOfBirth}
+          onChange={(e) => setDateOfBirth(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Gender</label>
+        <Select value={gender} onValueChange={setGender}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select your gender" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="male">Male</SelectItem>
+            <SelectItem value="female">Female</SelectItem>
+            <SelectItem value="other">Other</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Nationality</label>
+        <Input
+          type="text"
+          placeholder="Enter your nationality"
+          value={nationality}
+          onChange={(e) => setNationality(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Address</label>
+        <Input
+          type="text"
+          placeholder="Enter address here"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-2">Designation</label>
+        <Input
+          type="text"
+          placeholder="Enter your designation"
+          value={designation}
+          onChange={(e) => setDesignation(e.target.value)}
+        />
+      </div>
+      <div>
+  <label className="block text-sm font-medium mb-2">Languages Preferences</label>
+  <Select value={languages} onValueChange={setLanguages}>
+    <SelectTrigger>
+      <SelectValue placeholder="Select your languages" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="Malayalam">Malayalam</SelectItem>
+      <SelectItem value="English">English</SelectItem>
+      <SelectItem value="Hindi">Hindi</SelectItem>
+      <SelectItem value="Tamil">Tamil</SelectItem>
+      <SelectItem value="Telugu">Telugu</SelectItem>
+    </SelectContent>
+  </Select>
+</div>
+
+    </form>
+    <div className="flex justify-end gap-4 mt-6">
+      <Button variant="outline" onClick={closeSidebar}>
+        Cancel
+      </Button>
+      <Button
+        className="bg-blue-600 text-white hover:bg-blue-700"
+        onClick={handleSave}
+      >
+        Save
+      </Button>
+    </div>
+  </div>
       )}
     </div>
   );

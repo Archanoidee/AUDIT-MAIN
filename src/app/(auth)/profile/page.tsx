@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
 import React, { Suspense, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/ui/ui/input";
 import { Card } from "@/ui/ui/card";
 import { useRouter, useSearchParams } from "next/navigation";
-import axios from "axios"; // Ensure axios is imported
+import axios from "axios";
 import {
   Select,
   SelectContent,
@@ -14,13 +14,11 @@ import {
   SelectValue,
 } from "@radix-ui/react-select";
 
-// Define the ProfilePage component
 const ProfilePage: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const id = searchParams?.get("id"); // Get the ID from query parameters
+  const id = searchParams?.get("id");
 
-  // State to manage the form data
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -43,17 +41,12 @@ const ProfilePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch user data based on the ID
   useEffect(() => {
     if (id) {
       const fetchUserData = async () => {
         setLoading(true);
         try {
-          // Use axios to call the API route for fetching the profile
           const response = await axios.get<any>(`/api/staff/${id}`);
-          console.log(response.data);
-
-          // Map response to formData structure
           setFormData({
             firstName: response.data.profile.firstName || "",
             lastName: response.data.profile.lastName || "",
@@ -83,7 +76,6 @@ const ProfilePage: React.FC = () => {
     }
   }, [id]);
 
-  // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -93,28 +85,29 @@ const ProfilePage: React.FC = () => {
     setFormData((prev) => ({ ...prev, languages: value }));
   };
 
-  // Handle select change for gender
   const handleGenderChange = (value: string) => {
+    console.log(value);
     setFormData((prev) => ({ ...prev, gender: value }));
   };
-
   // Handle Save button click
   const handleSave = async () => {
     setLoading(true);
     try {
       // Send the updated formData to the server
-      const response = await axios.put(`/api/staff?id=${id}`, {formData:formData, id:id});
+      const response = await axios.put(`/api/staff?id=${id}`, {
+        formData: formData,
+        id: id,
+      });
       console.log("hi");
-      
 
       if (response.status === 200) {
-        alert('Profile updated successfully');
+        alert("Profile updated successfully");
         // Optionally, you can redirect the user after updating
         router.push("/profile"); // Adjust this to the page where you want to navigate
       }
     } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('Failed to update profile');
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile");
     } finally {
       setLoading(false);
     }
@@ -123,10 +116,9 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-10">
       <Card className="max-w-6xl mx-auto shadow-lg rounded-lg p-12">
-        {/* Profile Header */}
         <div className="flex items-center gap-6 mb-10">
           <img
-            src="https://static-00.iconduck.com/assets.00/user-avatar-icon-512x512-vufpcmdn.png" // Use the provided URL
+            src="https://static-00.iconduck.com/assets.00/user-avatar-icon-512x512-vufpcmdn.png"
             alt="Profile Avatar"
             className="w-20 h-20 rounded-full object-cover"
           />
@@ -138,7 +130,6 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Navigation Tabs */}
         <div className="flex gap-8 border-b mb-10 text-lg">
           <Button
             variant="link"
@@ -167,9 +158,7 @@ const ProfilePage: React.FC = () => {
           </Button>
         </div>
 
-        {/* Personal Information Form */}
         <div>
-          {/* Save and Cancel Buttons */}
           <div className="flex justify-end gap-6 mt-10">
             <Button variant="outline">Cancel</Button>
             <Button onClick={handleSave} disabled={loading}>
@@ -183,9 +172,10 @@ const ProfilePage: React.FC = () => {
             <p className="text-red-500">{error}</p>
           ) : (
             <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Form Fields */}
               <div>
-                <label className="block text-sm font-medium mb-2">First Name</label>
+                <label className="block text-sm font-medium mb-2">
+                  First Name
+                </label>
                 <Input
                   type="text"
                   name="firstName"
@@ -195,7 +185,9 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Last Name</label>
+                <label className="block text-sm font-medium mb-2">
+                  Last Name
+                </label>
                 <Input
                   type="text"
                   name="lastName"
@@ -205,7 +197,9 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Contact Number</label>
+                <label className="block text-sm font-medium mb-2">
+                  Contact Number
+                </label>
                 <Input
                   type="text"
                   name="contactNumber"
@@ -215,7 +209,9 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Gmail ID</label>
+                <label className="block text-sm font-medium mb-2">
+                  Gmail ID
+                </label>
                 <Input
                   type="text"
                   name="gmail"
@@ -225,7 +221,9 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Employee ID</label>
+                <label className="block text-sm font-medium mb-2">
+                  Employee ID
+                </label>
                 <Input
                   type="text"
                   name="employeeId"
@@ -235,7 +233,9 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Marital Status</label>
+                <label className="block text-sm font-medium mb-2">
+                  Marital Status
+                </label>
                 <Input
                   type="text"
                   name="maritalStatus"
@@ -255,7 +255,9 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Department</label>
+                <label className="block text-sm font-medium mb-2">
+                  Department
+                </label>
                 <Input
                   type="text"
                   name="department"
@@ -265,7 +267,9 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Date of Birth</label>
+                <label className="block text-sm font-medium mb-2">
+                  Date of Birth
+                </label>
                 <Input
                   type="text"
                   name="dob"
@@ -275,7 +279,9 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Nationality</label>
+                <label className="block text-sm font-medium mb-2">
+                  Nationality
+                </label>
                 <Input
                   type="text"
                   name="nationality"
@@ -285,7 +291,9 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Address</label>
+                <label className="block text-sm font-medium mb-2">
+                  Address
+                </label>
                 <Input
                   type="text"
                   name="address"
@@ -295,7 +303,9 @@ const ProfilePage: React.FC = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Designation</label>
+                <label className="block text-sm font-medium mb-2">
+                  Designation
+                </label>
                 <Input
                   type="text"
                   name="designation"
@@ -304,46 +314,52 @@ const ProfilePage: React.FC = () => {
                   placeholder="Designation"
                 />
               </div>
-              {/* Gender and Languages Select */}
+
               <div>
                 <label className="block text-sm font-medium mb-2">Gender</label>
+                <h1>{formData.gender}</h1>
                 <Select
-                  value={formData.gender}
-                  onValueChange={handleGenderChange}
-                  required
+                  value={formData.gender} // This should be the current gender value
+                  onValueChange={(value) =>
+                    value.length > 0 && handleGenderChange(value)
+                  } // Update the value correctly
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select your gender" />
+                    <SelectValue placeholder="Select your gender">
+                      {formData.gender || "Select your gender"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
-                    {formData?.genders?.length > 0
-                      ? formData.genders.map((item: any) => (
-                          <SelectItem key={item.Key} value={item.Value}>
-                            {item.Value}
-                          </SelectItem>
-                        ))
-                      : null}
+                    {formData.genders.map((item: any) => (
+                      <SelectItem key={item.Key} value={item.Value}>
+                        {item.Value}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Languages</label>
+                <label className="block text-sm font-medium mb-2">
+                  Languages
+                </label>
+                <h1>{formData.languages}</h1>
                 <Select
-                  value={formData.languages}
-                  onValueChange={handleLanguageChange}
-                  required
+                  value={formData.languages} // Current selected languages
+                  onValueChange={(value) =>
+                    value.length > 0 && handleLanguageChange(value)
+                  } // Update the value correctly
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select your languages" />
+                    <SelectValue placeholder="Select languages">
+                      {formData.languages || "Select languages"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
-                    {formData?.language?.length > 0
-                      ? formData.language.map((item: any) => (
-                          <SelectItem key={item.Key} value={item.Value}>
-                            {item.Value}
-                          </SelectItem>
-                        ))
-                      : null}
+                    {formData.language?.map((item: any) => (
+                      <SelectItem key={item.Key} value={item.Value}>
+                        {item.Value}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -355,7 +371,6 @@ const ProfilePage: React.FC = () => {
   );
 };
 
-// Wrap ProfilePage in Suspense and export it
 export default function Profile() {
   return (
     <Suspense fallback={<div>Loading profile...</div>}>
