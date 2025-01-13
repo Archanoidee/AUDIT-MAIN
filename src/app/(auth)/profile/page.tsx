@@ -129,33 +129,34 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex gap-8 border-b mb-10 text-lg">
-          <Button
-            variant="link"
-            className="py-3 px-6 text-blue-600 font-semibold border-b-4 border-blue-600"
-          >
-            Profile
-          </Button>
-          <Button
-            variant="link"
-            className="py-3 px-6 text-gray-600 hover:text-blue-600"
-          >
-            Skill Management
-          </Button>
-          <Button
-            variant="link"
-            className="py-3 px-6 text-gray-600 hover:text-blue-600"
-            onClick={() => router.push("/payroll")}
-          >
-            Payroll
-          </Button>
-          <Button
-            variant="link"
-            className="py-3 px-6 text-gray-600 hover:text-blue-600"
-          >
-            Documents
-          </Button>
-        </div>
+        <div className="flex flex-wrap gap-8 border-b mb-10 text-lg">
+  <Button
+    variant="link"
+    className="py-3 px-6 text-blue-600 font-semibold border-b-4 border-blue-600 w-full sm:w-auto text-center"
+  >
+    Profile
+  </Button>
+  <Button
+    variant="link"
+    className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
+  >
+    Skill Management
+  </Button>
+  <Button
+    variant="link"
+    className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
+    onClick={() => router.push("/payroll")}
+  >
+    Payroll
+  </Button>
+  <Button
+    variant="link"
+    className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
+  >
+    Documents
+  </Button>
+</div>
+
 
         <div>
           <div className="flex justify-end gap-6 mt-10">
@@ -343,6 +344,8 @@ const ProfilePage: React.FC = () => {
                   </SelectContent>
                 </Select>
               </div>
+              
+              
               <div>
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Address
