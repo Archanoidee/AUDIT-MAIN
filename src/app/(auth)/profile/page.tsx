@@ -28,7 +28,7 @@ const ProfilePage: React.FC = () => {
     maritalStatus: "",
     role: "",
     department: "",
-    dob: "",
+    dateOfBirth: "",
     gender: "",
     nationality: "",
     address: "",
@@ -56,7 +56,7 @@ const ProfilePage: React.FC = () => {
             maritalStatus: response.data.profile.maritalStatus || "",
             role: response.data.profile.role || "",
             department: response.data.profile.department || "",
-            dob: response.data.profile.dob || "",
+            dateOfBirth: response.data.profile.dateOfBirth || "",
             gender: response.data.profile.gender || "",
             nationality: response.data.profile.nationality || "",
             address: response.data.profile.address || "",
@@ -84,7 +84,7 @@ const ProfilePage: React.FC = () => {
   const handleLanguageChange = (value: string) => {
     setFormData((prev) => ({ ...prev, languages: value }));
   };
-
+  console.log(formData.languages);
   const handleGenderChange = (value: string) => {
     console.log(value);
     setFormData((prev) => ({ ...prev, gender: value }));
@@ -113,7 +113,7 @@ const ProfilePage: React.FC = () => {
     }
   };
   return (
-    <div className="min-h-screen bg-gray-50 p-10 h-screen overflow-y-auto ">
+    <div className="min-h-screen bg-gray-50 p-10 h-screen ">
       <Card className="max-w-6xl mx-auto shadow-lg rounded-lg p-12">
         <div className="flex items-center gap-6 mb-10">
           <img
@@ -156,7 +156,6 @@ const ProfilePage: React.FC = () => {
     Documents
   </Button>
 </div>
-
 
         <div>
           <div className="flex justify-end gap-6 mt-10">
@@ -273,7 +272,7 @@ const ProfilePage: React.FC = () => {
                 <Input
                   type="text"
                   name="dob"
-                  value={formData.dob}
+                  value={formData.dateOfBirth}
                   onChange={handleInputChange}
                   placeholder="DD/MM/YYYY"
                 />
@@ -292,7 +291,7 @@ const ProfilePage: React.FC = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">Gender</label>
-                <h1>{formData.gender}</h1>
+                
                 <Select
                   value={formData.gender} // This should be the current gender value
                   onValueChange={(value) =>
@@ -322,7 +321,7 @@ const ProfilePage: React.FC = () => {
                 <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
                   Languages
                 </label>
-                <h1>{formData.languages}</h1>
+                
                 <Select
                   value={formData.languages} // Current selected languages
                   onValueChange={(value) =>
@@ -343,6 +342,7 @@ const ProfilePage: React.FC = () => {
                     ))}
                   </SelectContent>
                 </Select>
+                
               </div>
               
               

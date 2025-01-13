@@ -180,7 +180,7 @@ const StaffListing: React.FC = () => {
         Close
       </Button>
     </div>
-    <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSave}>
+   <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSave}>
   <div>
     <label className="block text-sm font-medium mb-2">First Name</label>
     <Input
@@ -303,8 +303,6 @@ const StaffListing: React.FC = () => {
     </Button>
   </div>
 </form>
-
-
   </div>
       )}
     </div>
