@@ -1,9 +1,12 @@
 "use client";
-import * as ToastPrimitive from '@radix-ui/react-toast';
+import * as ToastPrimitive from "@radix-ui/react-toast";
 import React, { Suspense, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/ui/ui/input";
 import { Card } from "@/ui/ui/card";
+import Navbar from "@/app/components/navbar";
+import Cancel from "@/app/components/cancel";
+
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import {
@@ -13,23 +16,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/ui/ui/select";
-const Toast = ({ title, description }: { title: string; description?: string }) => {
+const Toast = ({
+  title,
+  description,
+}: {
+  title: string;
+  description?: string;
+}) => {
   return (
     <ToastPrimitive.Provider>
       <ToastPrimitive.Root
         className="bg-red-500 text-white p-4 rounded-lg shadow-md"
         duration={5000}
       >
-        <ToastPrimitive.Title className="font-bold">{title}</ToastPrimitive.Title>
+        <ToastPrimitive.Title className="font-bold">
+          {title}
+        </ToastPrimitive.Title>
         {description && (
-          <ToastPrimitive.Description className="text-sm">{description}</ToastPrimitive.Description>
+          <ToastPrimitive.Description className="text-sm">
+            {description}
+          </ToastPrimitive.Description>
         )}
       </ToastPrimitive.Root>
       <ToastPrimitive.Viewport className="fixed bottom-4 right-4 flex flex-col gap-2" />
     </ToastPrimitive.Provider>
   );
 };
-
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
@@ -134,6 +146,8 @@ const ProfilePage: React.FC = () => {
     }
   };
   return (
+    <div className="mt-20" >
+      <Navbar />
     <div className="min-h-screen bg-gray-50 p-10 h-screen ">
       <Card className="max-w-6xl mx-auto shadow-lg rounded-lg p-12">
         <div className="flex items-center gap-6 mb-10">
@@ -157,7 +171,7 @@ const ProfilePage: React.FC = () => {
           >
             Profile
           </Button>
-          <Button
+          {/* <Button
             variant="link"
             className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
           >
@@ -175,239 +189,233 @@ const ProfilePage: React.FC = () => {
             className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
           >
             Documents
-          </Button>
+          </Button> */}
         </div>
 
         <div>
-        <div className="flex justify-end">
-  <Button 
-    variant="outline" 
-    onClick={() => router.push(`/staff`)} // Pass the staff ID in the URL
-  >
-    Cancel
-  </Button>
-</div>
-
           <h3 className="text-xl font-semibold mb-6">Personal Information</h3>
-          
+
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
             <p className="text-red-500">{error}</p>
           ) : (
-            
-            <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  First Name<span className="text-red-600">*</span>
-                </label>
-                <Input
-                required
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  placeholder="First Name"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Last Name<span className="text-red-600">*</span>
-                </label>
-                <Input
-                required
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  placeholder="Last Name"
-                />
-              </div>
+            <form>
               <div className="flex justify-end gap-6 mt-10">
-            
-            <Button onClick={handleSave} disabled={loading}>
-              {loading ? "Saving..." : "Save"}
-            </Button>
-          </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Contact Number
-                </label>
-                <Input
-                  type="text"
-                  name="contactNumber"
-                  value={formData.contactNumber}
-                  onChange={handleInputChange}
-                  placeholder="Contact Number"
-                />
+                <Cancel></Cancel>
+                <Button onClick={handleSave} disabled={loading}>
+                  {loading ? "Saving..." : "Save"}
+                </Button>
               </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Email ID<span className="text-red-600">*</span>
-                </label>
-                <Input
-                required
-                  type="text"
-                  name="gmail"
-                  value={formData.gmail}
-                  onChange={handleInputChange}
-                  placeholder="Gmail ID"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Employee ID
-                </label>
-                <Input
-               
-                  type="text"
-                  name="employeeId"
-                  value={formData.employeeId}
-                  onChange={handleInputChange}
-                  placeholder="Employee ID"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Marital Status
-                </label>
-                <Input
-                  type="text"
-                  name="maritalStatus"
-                  value={formData.maritalStatus}
-                  onChange={handleInputChange}
-                  placeholder="Marital Status"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Role
-                </label>
-                <Input
-                  type="text"
-                  name="role"
-                  value={formData.role}
-                  onChange={handleInputChange}
-                  placeholder="Role"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Department
-                </label>
-                <Input
-                  type="text"
-                  name="department"
-                  value={formData.department}
-                  onChange={handleInputChange}
-                  placeholder="Department"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Languages
-                </label>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    First Name<span className="text-red-600">*</span>
+                  </label>
+                  <Input
+                    required
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    placeholder="First Name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Last Name<span className="text-red-600">*</span>
+                  </label>
+                  <Input
+                    required
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    placeholder="Last Name"
+                  />
+                </div>
 
-                <Select
-                  value={formData.languages} // Current selected languages
-                  onValueChange={(value) =>
-                    value.length > 0 && handleLanguageChange(value)
-                  } // Update the value correctly
-                >
-                  <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <SelectValue placeholder="Select languages">
-                      {formData.languages || "Select languages"}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {formData.language?.map((item: any) => (
-                      <SelectItem key={item.Key} value={item.Value}>
-                        {item.Value}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Gender
-                </label>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Contact Number
+                  </label>
+                  <Input
+                    type="text"
+                    name="contactNumber"
+                    value={formData.contactNumber}
+                    onChange={handleInputChange}
+                    placeholder="Contact Number"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Email ID<span className="text-red-600">*</span>
+                  </label>
+                  <Input
+                    required
+                    type="text"
+                    name="gmail"
+                    value={formData.gmail}
+                    onChange={handleInputChange}
+                    placeholder="Gmail ID"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Employee ID
+                  </label>
+                  <Input
+                    type="text"
+                    name="employeeId"
+                    value={formData.employeeId}
+                    onChange={handleInputChange}
+                    placeholder="Employee ID"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Marital Status
+                  </label>
+                  <Input
+                    type="text"
+                    name="maritalStatus"
+                    value={formData.maritalStatus}
+                    onChange={handleInputChange}
+                    placeholder="Marital Status"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Role
+                  </label>
+                  <Input
+                    type="text"
+                    name="role"
+                    value={formData.role}
+                    onChange={handleInputChange}
+                    placeholder="Role"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Department
+                  </label>
+                  <Input
+                    type="text"
+                    name="department"
+                    value={formData.department}
+                    onChange={handleInputChange}
+                    placeholder="Department"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Languages
+                  </label>
 
-                <Select
-                  value={formData.gender} // This should be the current gender value
-                  onValueChange={(value) =>
-                    value.length > 0 && handleGenderChange(value)
-                  } // Update the value correctly
-                >
-                  <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <SelectValue placeholder="Select your gender">
-                      {formData.gender || "Select your gender"}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {formData.genders.map((item: any) => (
-                      <SelectItem
-                        key={item.Key}
-                        value={item.Value}
-                        className="border-b border-gray-200 px-4 py-2 hover:bg-gray-300 cursor-pointer"
-                      >
-                        {item.Value}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Date of Birth
-                </label>
-                <Input
-                  type="text"
-                  name="dateOfBirth"
-                  value={formData.dateOfBirth}
-                  onChange={handleInputChange}
-                  placeholder="DD/MM/YYYY"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Nationality
-                </label>
-                <Input
-                  type="text"
-                  name="nationality"
-                  value={formData.nationality}
-                  onChange={handleInputChange}
-                  placeholder="Nationality"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Address
-                </label>
-                <textarea
-                  name="address"
-                  value={formData.address}
-                  onChange={handletextareaChange}
-                  placeholder="Address"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                  Designation
-                </label>
-                <Input
-                  type="text"
-                  name="designation"
-                  value={formData.designation}
-                  onChange={handleInputChange}
-                  placeholder="Designation"
-                />
+                  <Select
+                    value={formData.languages} // Current selected languages
+                    onValueChange={(value) =>
+                      value.length > 0 && handleLanguageChange(value)
+                    } // Update the value correctly
+                  >
+                    <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                      <SelectValue placeholder="Select languages">
+                        {formData.languages || "Select languages"}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {formData.language?.map((item: any) => (
+                        <SelectItem key={item.Key} value={item.Value}>
+                          {item.Value}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Gender
+                  </label>
+
+                  <Select
+                    value={formData.gender} // This should be the current gender value
+                    onValueChange={(value) =>
+                      value.length > 0 && handleGenderChange(value)
+                    } // Update the value correctly
+                  >
+                    <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                      <SelectValue placeholder="Select your gender">
+                        {formData.gender || "Select your gender"}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {formData.genders.map((item: any) => (
+                        <SelectItem
+                          key={item.Key}
+                          value={item.Value}
+                          className="border-b border-gray-200 px-4 py-2 hover:bg-gray-300 cursor-pointer"
+                        >
+                          {item.Value}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Date of Birth
+                  </label>
+                  <Input
+                    type="text"
+                    name="dateOfBirth"
+                    value={formData.dateOfBirth}
+                    onChange={handleInputChange}
+                    placeholder="DD/MM/YYYY"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Nationality
+                  </label>
+                  <Input
+                    type="text"
+                    name="nationality"
+                    value={formData.nationality}
+                    onChange={handleInputChange}
+                    placeholder="Nationality"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Address
+                  </label>
+                  <textarea
+                    name="address"
+                    value={formData.address}
+                    onChange={handletextareaChange}
+                    placeholder="Address"
+                    className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                    Designation
+                  </label>
+                  <Input
+                    type="text"
+                    name="designation"
+                    value={formData.designation}
+                    onChange={handleInputChange}
+                    placeholder="Designation"
+                  />
+                </div>
               </div>
             </form>
           )}
         </div>
       </Card>
+    </div>
     </div>
   );
 };

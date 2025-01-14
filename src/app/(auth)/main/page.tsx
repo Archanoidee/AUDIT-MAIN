@@ -8,6 +8,7 @@ import { CardHeader } from "@/ui/ui/card";
 import { CardDescription } from "@/ui/ui/card";
 import { CardTitle } from "@/ui/ui/card";
 import { useRouter } from "next/navigation";
+import Navbar from "@/app/components/navbar";
 
 const Dashboard = () => {
   const UserIcon = Icons.User as React.ComponentType<Icons.LucideProps>;
@@ -19,15 +20,17 @@ const Dashboard = () => {
 
   return (
     <div>
-<Button
+      <Navbar />
+   
+{/* <Button
   className="py-3 px-6 text-white bg-blue-600 rounded-full shadow-md transform transition-all duration-300 ease-in-out hover:bg-blue-700 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
   onClick={() => router.push("/login")}
 >
   Logout
-</Button>
+</Button> */}
 
 
-                <div className="flex flex-wrap justify-center gap-8 p-8">
+<div className="flex flex-wrap justify-center gap-8 p-8 mt-20">
   {/* Card for Staff */}
   <Card className="w-72 border border-gray-200 rounded-xl shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl">
     <CardHeader>

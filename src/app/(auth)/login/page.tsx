@@ -72,13 +72,7 @@ const Login = () => {
               {loading ? "Loading..." : "Login"}
             </Button>
           </form>
-          {`Don't have an account?`}{" "}
-          <Link
-            href="/signup"
-            className="text-center text-blue-800 cursor-pointer underline"
-          >
-            Signup
-          </Link>
+         
         </div>
       </div>
     </div>
