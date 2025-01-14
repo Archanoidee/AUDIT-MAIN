@@ -209,7 +209,7 @@ const ProfilePage: React.FC = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     First Name<span className="text-red-600">*</span>
                   </label>
                   <Input
@@ -222,7 +222,7 @@ const ProfilePage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Last Name<span className="text-red-600">*</span>
                   </label>
                   <Input
@@ -236,7 +236,7 @@ const ProfilePage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Contact Number
                   </label>
                   <Input
@@ -248,7 +248,7 @@ const ProfilePage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Email ID<span className="text-red-600">*</span>
                   </label>
                   <Input
@@ -261,7 +261,7 @@ const ProfilePage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Employee ID
                   </label>
                   <Input
@@ -273,7 +273,7 @@ const ProfilePage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Marital Status
                   </label>
                   <Input
@@ -285,9 +285,9 @@ const ProfilePage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
-                    Role
-                  </label>
+                <label className="block text-base font-medium mb-3 text-gray-900 tracking-wide">
+  Role
+</label>
                   <Input
                     type="text"
                     name="role"
@@ -297,7 +297,7 @@ const ProfilePage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Department
                   </label>
                   <Input
@@ -309,7 +309,7 @@ const ProfilePage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Languages
                   </label>
 
@@ -334,7 +334,7 @@ const ProfilePage: React.FC = () => {
                   </Select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Gender
                   </label>
 
@@ -363,7 +363,7 @@ const ProfilePage: React.FC = () => {
                   </Select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Date of Birth
                   </label>
                   <Input
@@ -375,7 +375,7 @@ const ProfilePage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Nationality
                   </label>
                   <Input
@@ -387,7 +387,7 @@ const ProfilePage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Address
                   </label>
                   <textarea
@@ -399,7 +399,7 @@ const ProfilePage: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-700 uppercase tracking-wide">
+                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                     Designation
                   </label>
                   <Input

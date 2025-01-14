@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/ui/ui/button";
 import { Input } from "@/ui/ui/input";
 import Navbar from "@/app/components/navbar";
-
+import { Avatar, AvatarImage, AvatarFallback } from "@/ui/ui/avatar";
 import {
   Select,
   SelectContent,
@@ -154,11 +154,16 @@ const StaffListing: React.FC = () => {
                 className="bg-white border border-gray-200 rounded-lg shadow-xl p-6 flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-2xl"
               >
                 {/* Display staff image */}
-                <img
-                  src="https://static-00.iconduck.com/assets.00/user-avatar-icon-512x512-vufpcmdn.png" // Use the provided URL
-                  alt={`${staff.profile.firstName} ${staff.profile.lastName}`}
-                  className="w-24 h-16 "
-                />
+                <Avatar className="w-24 h-16">
+  <AvatarImage
+    src="https://static-00.iconduck.com/assets.00/user-avatar-icon-512x512-vufpcmdn.png" // Use the provided URL
+    alt={`${staff.profile.firstName} ${staff.profile.lastName}`}
+  />
+  <AvatarFallback>
+    {staff.profile.firstName.charAt(0)}
+    {staff.profile.lastName.charAt(0)}
+  </AvatarFallback>
+</Avatar>
 
                 {/* Display staff name from the database */}
                 <h2 className="text-xl font-bold text-gray-800 mb-3">
