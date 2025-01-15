@@ -23,6 +23,8 @@ export default async function handler(
         address,
         designation,
         languages,
+        role,
+        status,
       } = req.body;
 
       // Dropdown data (gender and language options)
@@ -58,10 +60,12 @@ export default async function handler(
             maritalStatus: "Empty", // Static example data
             nationality,
             address,
+            status:"Empty",
             designation,
             region: "Empty", // Example region
-            role: "Empty", // Example role
+            role, // Example role
             department: "Empty", // Example department
+
           },
           dropdown: dropdown, // Add dropdown data to the staff record
         },
@@ -103,6 +107,7 @@ export default async function handler(
         languages,
         genders,
         language,
+        status
       } = req.body.formData;
       console.log(
         firstName,
@@ -120,7 +125,8 @@ export default async function handler(
         designation,
         languages,
         genders,
-        language
+        language,
+        status,
       );
 
       // Find the staff by ID
@@ -144,6 +150,7 @@ export default async function handler(
             languages,
             genders,
             language,
+            status,
           },
         },
       });

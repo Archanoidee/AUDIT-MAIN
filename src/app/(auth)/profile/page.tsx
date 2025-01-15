@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/ui/ui/input";
 import { Card } from "@/ui/ui/card";
 import Navbar from "@/app/components/navbar";
+import Toggle from "@/app/components/ToggleButton";
 import Cancel from "@/app/components/cancel";
-
+import "boxicons";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import {
@@ -16,6 +17,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/ui/ui/select";
+import { log } from "console";
+import { request } from "http";
 const Toast = ({
   title,
   description,
@@ -47,8 +50,11 @@ const ProfilePage: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams?.get("id");
+  const [isActive, setIsActive] = useState(false); // Initial state is false (inactive)
+console.log(isActive);
 
   const [formData, setFormData] = useState({
+    status:"",
     firstName: "",
     lastName: "",
     contactNumber: "",
@@ -66,16 +72,21 @@ const ProfilePage: React.FC = () => {
     genders: [],
     language: [],
   });
-
+console.log(formData.status);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [role, setrole] = useState("");
 
   useEffect(() => {
     if (id) {
+      console.log("hai");
+
       const fetchUserData = async () => {
         setLoading(true);
         try {
           const response = await axios.get<any>(`/api/staff/${id}`);
+          console.log(response);
+
           setFormData({
             firstName: response.data.profile.firstName || "",
             lastName: response.data.profile.lastName || "",
@@ -93,7 +104,9 @@ const ProfilePage: React.FC = () => {
             languages: response.data.profile.languages || "",
             genders: response.data.dropdown.gender || [],
             language: response.data.dropdown.language || [],
+            status: response.data.profile?.status || "", // or response.data?.status || ""
           });
+       console.log(response.data.profile.status);
         } catch (error) {
           console.error("Error fetching user data:", error);
           setError("Error fetching user data");
@@ -113,7 +126,6 @@ const ProfilePage: React.FC = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
   const handleLanguageChange = (value: string) => {
     setFormData((prev) => ({ ...prev, languages: value }));
   };
@@ -145,33 +157,71 @@ const ProfilePage: React.FC = () => {
       setLoading(false);
     }
   };
+  
+    // Handle toggle for both the switch and button
+    const handleToggle = () => {
+      const action = isActive ? "deactivate" : "activate"; // Determine the action
+      const confirmMessage = `Are you sure you want to ${action}?`;
+      
+      // Show confirmation dialog
+      if (confirm(confirmMessage)) {
+        setIsActive(!isActive); // Toggle the state on confirmation
+      }
+    };
   return (
-    <div className="mt-20" >
+    <div className="mt-20">
       <Navbar />
-    <div className="min-h-screen bg-gray-50 p-10 h-screen ">
-      <Card className="max-w-6xl mx-auto shadow-lg rounded-lg p-12">
-        <div className="flex items-center gap-6 mb-10">
-          <img
-            src="https://static-00.iconduck.com/assets.00/user-avatar-icon-512x512-vufpcmdn.png"
-            alt="Profile Avatar"
-            className="w-20 h-20 rounded-full object-cover"
-          />
-          <div>
-            <h2 className="text-2xl font-semibold">
-              {formData.firstName} {formData.lastName}
-            </h2>
-            <p className="text-sm text-gray-600">Team: {formData.employeeId}</p>
-          </div>
-        </div>
+     
+      <div className="min-h-screen bg-gray-50 p-10 h-screen ">
+      
+        <Card className="max-w-6xl mx-auto shadow-lg rounded-lg p-12">
+          <div className="flex items-center gap-6 mb-10">
+            <img
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+              alt="Profile Avatar"
+              className="w-20 h-20 rounded-full object-cover"
+            />
+            <div>
+              <h2 className="text-2xl font-semibold">
+                {formData.firstName} {formData.lastName}
+              </h2>
 
-        <div className="flex flex-wrap gap-8 border-b mb-10 text-lg">
-          <Button
-            variant="link"
-            className="py-3 px-6 text-blue-600 font-semibold border-b-4 border-blue-600 w-full sm:w-auto text-center"
-          >
-            Profile
-          </Button>
-          {/* <Button
+              <p className="text-sm text-gray-600">
+                Team: {formData.employeeId}
+              </p>
+            </div>
+          
+            
+          </div>
+
+         <div className="relative">
+               {/* Input field */}
+               <div className=" top-2 left-2">
+                 <input
+                   type="text"
+                   readOnly
+                   value={isActive ? "Active" : "Inactive"} // Dynamically set the value
+                   className={`p-2 rounded-md mb-6 pl-7 w-28
+                     ${isActive ? "border-green-500 text-green-700 bg-green-100" : "border-red-500 text-red-700 bg-red-100"}`}
+                 />
+               </div>
+         
+               {/* Button */}
+               <div className="absolute top-2 right-2">
+                 <Button onClick={handleToggle} className="px-4 py-2">
+                   {isActive ? "Deactivate" : "Activate"}
+                 </Button>
+               </div>
+             </div>
+           
+          <div className="flex flex-wrap gap-8 border-b mb-10 text-lg">
+            <Button
+              variant="link"
+              className="py-3 px-6 text-blue-600 font-semibold border-b-4 border-blue-600 w-full sm:w-auto text-center"
+            >
+              Profile
+            </Button>
+            {/* <Button
             variant="link"
             className="py-3 px-6 text-gray-600 hover:text-blue-600 w-full sm:w-auto text-center"
           >
@@ -190,232 +240,252 @@ const ProfilePage: React.FC = () => {
           >
             Documents
           </Button> */}
-        </div>
+          </div>
 
-        <div>
-          <h3 className="text-xl font-semibold mb-6">Personal Information</h3>
+          <div>
+            <h3 className="text-xl font-semibold mb-6">Personal Information</h3>
 
-          {loading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p className="text-red-500">{error}</p>
-          ) : (
-            <form>
-              <div className="flex justify-end gap-6 mt-10">
-                <Cancel></Cancel>
-                <Button onClick={handleSave} disabled={loading}>
-                  {loading ? "Saving..." : "Save"}
-                </Button>
+            {loading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p className="text-red-500">{error}</p>
+            ) : (
+              <div>
+                <div className="flex justify-end gap-6 mt-10">
+                  <Button onClick={() => router.push("/staff")}>Cancel</Button>
+                  <Button onClick={handleSave} disabled={loading}>
+                    {loading ? "Saving..." : "Save"}
+                  </Button>
+                </div>
+                <form>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        First Name<span className="text-red-600">*</span>
+                      </label>
+                      <Input
+                        required
+                        type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        placeholder="First Name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Last Name<span className="text-red-600">*</span>
+                      </label>
+                      <Input
+                        required
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        placeholder="Last Name"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Contact Number
+                      </label>
+                      <Input
+                        type="text"
+                        name="contactNumber"
+                        value={formData.contactNumber}
+                        onChange={handleInputChange}
+                        placeholder="Contact Number"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Email ID<span className="text-red-600">*</span>
+                      </label>
+                      <Input
+                        required
+                        type="text"
+                        name="gmail"
+                        value={formData.gmail}
+                        onChange={handleInputChange}
+                        placeholder="Gmail ID"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Employee ID
+                      </label>
+                      <Input
+                        type="text"
+                        name="employeeId"
+                        value={formData.employeeId}
+                        onChange={handleInputChange}
+                        placeholder="Employee ID"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Marital Status
+                      </label>
+                      <Input
+                        type="text"
+                        name="maritalStatus"
+                        value={formData.maritalStatus}
+                        onChange={handleInputChange}
+                        placeholder="Marital Status"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Role
+                      </label>
+                      <Select value={role} onValueChange={setrole}>
+                        <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <SelectValue placeholder= {formData.role} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Admin">Admin</SelectItem>
+                          <SelectItem value="Editor">Editor</SelectItem>
+                          <SelectItem value="Staff">Staff</SelectItem>
+                          <SelectItem value="Hr">Hr</SelectItem>
+                          <SelectItem value="Manager">Manager</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Department
+                      </label>
+                      <Input
+                        type="text"
+                        name="department"
+                        value={formData.department}
+                        onChange={handleInputChange}
+                        placeholder="Department"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Languages
+                      </label>
+
+                      <Select
+                        value={formData.languages} // Current selected languages
+                        onValueChange={(value) =>
+                          value.length > 0 && handleLanguageChange(value)
+                        } // Update the value correctly
+                      >
+                        <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <SelectValue placeholder="Select languages">
+                            {formData.languages || "Select languages"}
+                          </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                          {formData.language?.map((item: any) => (
+                            <SelectItem key={item.Key} value={item.Value}>
+                              {item.Value}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Gender
+                      </label>
+
+                      <Select
+                        value={formData.gender} // This should be the current gender value
+                        onValueChange={(value) =>
+                          value.length > 0 && handleGenderChange(value)
+                        } // Update the value correctly
+                      >
+                        <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <SelectValue placeholder="Select your gender">
+                            {formData.gender || "Select your gender"}
+                          </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                          {formData.genders.map((item: any) => (
+                            <SelectItem
+                              key={item.Key}
+                              value={item.Value}
+                              className="border-b border-gray-200 px-4 py-2 hover:bg-gray-300 cursor-pointer"
+                            >
+                              {item.Value}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Date of Birth
+                      </label>
+                      <Input
+                        type="text"
+                        name="dateOfBirth"
+                        value={formData.dateOfBirth}
+                        onChange={handleInputChange}
+                        placeholder="DD/MM/YYYY"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Nationality
+                      </label>
+                      <Input
+                        type="text"
+                        name="nationality"
+                        value={formData.nationality}
+                        onChange={handleInputChange}
+                        placeholder="Nationality"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Address
+                      </label>
+                      <textarea
+                        name="address"
+                        value={formData.address}
+                        onChange={handletextareaChange}
+                        placeholder="Address"
+                        className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
+                        Designation
+                      </label>
+                      <Input
+                        type="text"
+                        name="designation"
+                        value={formData.designation}
+                        onChange={handleInputChange}
+                        placeholder="Designation"
+                      />
+                    </div>
+                    <div className="hidden">
+  <label className="block text-sm font-medium mb-3 text-gray-900 tracking-wide">
+    status
+  </label>
+  <Input
+    type="text"
+    name="status"
+    value={isActive ? "Active" : "Inactive"} // Dynamically set the value
+    onChange={handleInputChange}
+    placeholder="status"
+  />
+</div>
+
+                  </div>
+                </form>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    First Name<span className="text-red-600">*</span>
-                  </label>
-                  <Input
-                    required
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    placeholder="First Name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Last Name<span className="text-red-600">*</span>
-                  </label>
-                  <Input
-                    required
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    placeholder="Last Name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Contact Number
-                  </label>
-                  <Input
-                    type="text"
-                    name="contactNumber"
-                    value={formData.contactNumber}
-                    onChange={handleInputChange}
-                    placeholder="Contact Number"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Email ID<span className="text-red-600">*</span>
-                  </label>
-                  <Input
-                    required
-                    type="text"
-                    name="gmail"
-                    value={formData.gmail}
-                    onChange={handleInputChange}
-                    placeholder="Gmail ID"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Employee ID
-                  </label>
-                  <Input
-                    type="text"
-                    name="employeeId"
-                    value={formData.employeeId}
-                    onChange={handleInputChange}
-                    placeholder="Employee ID"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Marital Status
-                  </label>
-                  <Input
-                    type="text"
-                    name="maritalStatus"
-                    value={formData.maritalStatus}
-                    onChange={handleInputChange}
-                    placeholder="Marital Status"
-                  />
-                </div>
-                <div>
-                <label className="block text-base font-medium mb-3 text-gray-900 tracking-wide">
-  Role
-</label>
-                  <Input
-                    type="text"
-                    name="role"
-                    value={formData.role}
-                    onChange={handleInputChange}
-                    placeholder="Role"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Department
-                  </label>
-                  <Input
-                    type="text"
-                    name="department"
-                    value={formData.department}
-                    onChange={handleInputChange}
-                    placeholder="Department"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Languages
-                  </label>
-
-                  <Select
-                    value={formData.languages} // Current selected languages
-                    onValueChange={(value) =>
-                      value.length > 0 && handleLanguageChange(value)
-                    } // Update the value correctly
-                  >
-                    <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                      <SelectValue placeholder="Select languages">
-                        {formData.languages || "Select languages"}
-                      </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                      {formData.language?.map((item: any) => (
-                        <SelectItem key={item.Key} value={item.Value}>
-                          {item.Value}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Gender
-                  </label>
-
-                  <Select
-                    value={formData.gender} // This should be the current gender value
-                    onValueChange={(value) =>
-                      value.length > 0 && handleGenderChange(value)
-                    } // Update the value correctly
-                  >
-                    <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                      <SelectValue placeholder="Select your gender">
-                        {formData.gender || "Select your gender"}
-                      </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                      {formData.genders.map((item: any) => (
-                        <SelectItem
-                          key={item.Key}
-                          value={item.Value}
-                          className="border-b border-gray-200 px-4 py-2 hover:bg-gray-300 cursor-pointer"
-                        >
-                          {item.Value}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Date of Birth
-                  </label>
-                  <Input
-                    type="text"
-                    name="dateOfBirth"
-                    value={formData.dateOfBirth}
-                    onChange={handleInputChange}
-                    placeholder="DD/MM/YYYY"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Nationality
-                  </label>
-                  <Input
-                    type="text"
-                    name="nationality"
-                    value={formData.nationality}
-                    onChange={handleInputChange}
-                    placeholder="Nationality"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Address
-                  </label>
-                  <textarea
-                    name="address"
-                    value={formData.address}
-                    onChange={handletextareaChange}
-                    placeholder="Address"
-                    className="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
-                    Designation
-                  </label>
-                  <Input
-                    type="text"
-                    name="designation"
-                    value={formData.designation}
-                    onChange={handleInputChange}
-                    placeholder="Designation"
-                  />
-                </div>
-              </div>
-            </form>
-          )}
-        </div>
-      </Card>
-    </div>
+            )}
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/ui/ui/button";
 import { Input } from "@/ui/ui/input";
 import Navbar from "@/app/components/navbar";
+import Toggle from "@/app/components/ToggleButton";
 import { Avatar, AvatarImage, AvatarFallback } from "@/ui/ui/avatar";
 import {
   Select,
@@ -38,6 +39,7 @@ interface StaffMember {
     role: string;
     languages: string[];
     department: string;
+    status:string
   };
 }
 
@@ -63,7 +65,8 @@ const StaffListing: React.FC = () => {
   const [designation, setDesignation] = useState("");
   const [languages, setLanguages] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [role, setrole] = useState("");
+  const [status, setstatus] = useState("");
   useEffect(() => {
     // Fetch staff data when the component mounts
     const fetchStaff = async () => {
@@ -109,7 +112,10 @@ const StaffListing: React.FC = () => {
         address,
         designation,
         languages,
+        role,
+        status,
       });
+
 
       console.log(response.data.message);
       closeSidebar();
@@ -154,9 +160,9 @@ const StaffListing: React.FC = () => {
                 className="bg-white border border-gray-200 rounded-lg shadow-xl p-6 flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-2xl"
               >
                 {/* Display staff image */}
-                <Avatar className="w-24 h-16">
+                <Avatar className="w-10 h-10">
   <AvatarImage
-    src="https://static-00.iconduck.com/assets.00/user-avatar-icon-512x512-vufpcmdn.png" // Use the provided URL
+    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" // Use the provided URL
     alt={`${staff.profile.firstName} ${staff.profile.lastName}`}
   />
   <AvatarFallback>
@@ -170,7 +176,7 @@ const StaffListing: React.FC = () => {
                   {staff.profile.firstName} {staff.profile.lastName}
                 </h2>
 
-                <div className="bg-blue-50 p-4 rounded-md w-full text-center shadow-sm">
+                <div className="bg-blue-50 p-4  w-full text-center shadow-sm">
                   <p className="text-sm text-gray-700 flex items-center justify-center gap-2">
                     📧 {staff.profile.gmail}
                   </p>
@@ -180,7 +186,7 @@ const StaffListing: React.FC = () => {
                 </div>
 
                 <Button
-                  className="mt-6 bg-blue-600 text-white w-full py-2 rounded-md hover:bg-blue-700 transition-colors duration-300 ease-in-out"
+                  className="mt-6 bg-blue-500 text-white w-full py-2 rounded-md hover:bg-blue-600 transition-colors duration-300 ease-in-out"
                   onClick={() => router.push(`/profile/${staff.id}`)} // Pass the staff ID in the URL
                 >
                   View details
@@ -194,14 +200,20 @@ const StaffListing: React.FC = () => {
           )}
         </div>
 
-        {/* Full-page Sidebar */}
+        {/*page Sidebar */}
         {isSidebarOpen && (
           <div className="fixed top-0 right-0 w-full max-w-md h-full bg-white z-50 flex flex-col p-6 overflow-y-auto shadow-lg">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-semibold">Personal Information</h3>
+              
               <Button variant="outline" onClick={closeSidebar}>
                 Close
               </Button>
+              
+            </div>
+            <div>
+          
+            
             </div>
             <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSave}>
               <div>
@@ -293,6 +305,21 @@ const StaffListing: React.FC = () => {
                   </Select>
                 </div>
                 <div>
+                  <label className="block text-sm font-medium mb-2">Role</label>
+                  <Select value={role} onValueChange={setrole}>
+                    <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                      <SelectValue placeholder="Select your Role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Admin">Admin</SelectItem>
+                      <SelectItem value="Editor">Editor</SelectItem>
+                      <SelectItem value="Staff">Staff</SelectItem>
+                      <SelectItem value="Hr">Hr</SelectItem>
+                      <SelectItem value="Manager">Manager</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
                   <label className="block text-sm font-medium mb-2">Nationality</label>
                   <Input
                     type="text"
@@ -336,6 +363,7 @@ const StaffListing: React.FC = () => {
                     </SelectContent>
                   </Select>
                 </div>
+                
               {/* Other form fields here */}
               {/* (Same as before) */}
               <div className="flex justify-end gap-4 mt-6">
@@ -346,7 +374,9 @@ const StaffListing: React.FC = () => {
                   Save
                 </Button>
               </div>
+              
             </form>
+           
           </div>
         )}
       </div>

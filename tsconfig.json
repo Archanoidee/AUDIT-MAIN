@@ -1,4 +1,6 @@
 {
+
+  
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -22,6 +24,16 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/(auth)/Documents", "src/app/(auth)/test"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/(auth)/Documents",
+    "src/app/(auth)/test",
+    "custom.d.ts"
+  ],
   "exclude": ["node_modules"]
+  
 }
+
