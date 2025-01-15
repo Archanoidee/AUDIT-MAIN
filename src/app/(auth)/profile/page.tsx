@@ -478,7 +478,6 @@ console.log(formData.status);
     placeholder="status"
   />
 </div>
-
                   </div>
                 </form>
               </div>
