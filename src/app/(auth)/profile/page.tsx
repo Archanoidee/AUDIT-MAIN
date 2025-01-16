@@ -50,11 +50,8 @@ const ProfilePage: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams?.get("id");
-  const [isActive, setIsActive] = useState(false); // Initial state is false (inactive)
-console.log(isActive);
-
   const [formData, setFormData] = useState({
-    status:"",
+    active: true,
     firstName: "",
     lastName: "",
     contactNumber: "",
@@ -72,7 +69,7 @@ console.log(isActive);
     genders: [],
     language: [],
   });
-console.log(formData.status);
+  console.log(formData.active);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [role, setrole] = useState("");
@@ -104,9 +101,9 @@ console.log(formData.status);
             languages: response.data.profile.languages || "",
             genders: response.data.dropdown.gender || [],
             language: response.data.dropdown.language || [],
-            status: response.data.profile?.status || "", // or response.data?.status || ""
+            active: response.data.profile?.active || false, // or response.data?.status || ""
           });
-       console.log(response.data.profile.status);
+          console.log(response.data.status);
         } catch (error) {
           console.error("Error fetching user data:", error);
           setError("Error fetching user data");
@@ -121,6 +118,13 @@ console.log(formData.status);
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value == "Active" ? true : false,
+    }));
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -134,6 +138,7 @@ console.log(formData.status);
     console.log(value);
     setFormData((prev) => ({ ...prev, gender: value }));
   };
+
   // Handle Save button click
   const handleSave = async () => {
     setLoading(true);
@@ -143,7 +148,7 @@ console.log(formData.status);
         formData: formData,
         id: id,
       });
-      console.log("hi");
+      console.log(formData);
 
       if (response.status === 200) {
         alert("Profile updated successfully");
@@ -157,23 +162,22 @@ console.log(formData.status);
       setLoading(false);
     }
   };
-  
-    // Handle toggle for both the switch and button
-    const handleToggle = () => {
-      const action = isActive ? "deactivate" : "activate"; // Determine the action
-      const confirmMessage = `Are you sure you want to ${action}?`;
-      
-      // Show confirmation dialog
-      if (confirm(confirmMessage)) {
-        setIsActive(!isActive); // Toggle the state on confirmation
-      }
-    };
+
+  // Handle toggle for both the switch and button
+  const handleToggle = () => {
+    const action = formData.active ? "deactivate" : "activate"; // Determine the action
+    const confirmMessage = `Are you sure you want to ${action}?`;
+
+    // Show confirmation dialog
+    if (confirm(confirmMessage)) {
+      setFormData((prev) => ({ ...prev, active: !prev.active }));
+    }
+  };
   return (
     <div className="mt-20">
       <Navbar />
-     
+
       <div className="min-h-screen bg-gray-50 p-10 h-screen ">
-      
         <Card className="max-w-6xl mx-auto shadow-lg rounded-lg p-12">
           <div className="flex items-center gap-6 mb-10">
             <img
@@ -190,30 +194,32 @@ console.log(formData.status);
                 Team: {formData.employeeId}
               </p>
             </div>
-          
-            
           </div>
 
-         <div className="relative">
-               {/* Input field */}
-               <div className=" top-2 left-2">
-                 <input
-                   type="text"
-                   readOnly
-                   value={isActive ? "Active" : "Inactive"} // Dynamically set the value
-                   className={`p-2 rounded-md mb-6 pl-7 w-28
-                     ${isActive ? "border-green-500 text-green-700 bg-green-100" : "border-red-500 text-red-700 bg-red-100"}`}
-                 />
-               </div>
-         
-               {/* Button */}
-               <div className="absolute top-2 right-2">
-                 <Button onClick={handleToggle} className="px-4 py-2">
-                   {isActive ? "Deactivate" : "Activate"}
-                 </Button>
-               </div>
-             </div>
-           
+          <div className="relative">
+            {/* Input field */}
+            <div className=" top-2 left-2">
+              <input
+                type="text"
+                readOnly
+                value={formData.active ? "Active" : "Inactive"} // Dynamically set the value
+                className={`p-2 rounded-md mb-6 pl-7 w-28
+                     ${
+                       formData.active
+                         ? "border-green-500 text-green-700 bg-green-100"
+                         : "border-red-500 text-red-700 bg-red-100"
+                     }`}
+              />
+            </div>
+
+            {/* Button */}
+            <div className="absolute top-2 right-2">
+              <Button onClick={handleToggle} className="px-4 py-2">
+                {formData.active ? "Deactivate" : "Activate"}
+              </Button>
+            </div>
+          </div>
+
           <div className="flex flex-wrap gap-8 border-b mb-10 text-lg">
             <Button
               variant="link"
@@ -341,7 +347,7 @@ console.log(formData.status);
                       </label>
                       <Select value={role} onValueChange={setrole}>
                         <SelectTrigger className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                          <SelectValue placeholder= {formData.role} />
+                          <SelectValue placeholder={formData.role} />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="Admin">Admin</SelectItem>
@@ -466,18 +472,18 @@ console.log(formData.status);
                         placeholder="Designation"
                       />
                     </div>
-                    <div className="hidden">
-  <label className="block text-sm font-medium mb-3 text-gray-900 tracking-wide">
-    status
-  </label>
-  <Input
-    type="text"
-    name="status"
-    value={isActive ? "Active" : "Inactive"} // Dynamically set the value
-    onChange={handleInputChange}
-    placeholder="status"
-  />
-</div>
+                    <div className="hidden" >
+                      <label className="block text-sm font-medium mb-3 text-gray-900 tracking-wide">
+                        status
+                      </label>
+                      <Input
+                        type="text"
+                        name="active"
+                        value={formData.active ? "Active" : "Inactive"} // Dynamically set the value
+                        onChange={handleStatusChange}
+                        placeholder="status"
+                      />
+                    </div>
                   </div>
                 </form>
               </div>
