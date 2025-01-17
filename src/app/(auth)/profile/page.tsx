@@ -7,7 +7,9 @@ import { Card } from "@/ui/ui/card";
 import Navbar from "@/app/components/navbar";
 import Toggle from "@/app/components/ToggleButton";
 import Cancel from "@/app/components/cancel";
+import dynamic from 'next/dynamic';
 import "boxicons";
+import ClientOnlyComponent from "@/app/components/ClientOnly";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import {
@@ -45,6 +47,8 @@ const Toast = ({
     </ToastPrimitive.Provider>
   );
 };
+
+
 
 const ProfilePage: React.FC = () => {
   const router = useRouter();
@@ -176,7 +180,7 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="mt-20">
       <Navbar />
-
+      <ClientOnlyComponent>
       <div className="min-h-screen bg-gray-50 p-10 h-screen ">
         <Card className="max-w-6xl mx-auto shadow-lg rounded-lg p-12">
           <div className="flex items-center gap-6 mb-10">
@@ -491,6 +495,8 @@ const ProfilePage: React.FC = () => {
           </div>
         </Card>
       </div>
+      </ClientOnlyComponent>
+      
     </div>
   );
 };
