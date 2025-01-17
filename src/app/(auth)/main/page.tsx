@@ -46,10 +46,7 @@ const Dashboard = () => {
     </CardHeader>
     <CardFooter className="flex justify-center">
       <Button
-        onClick={() => (window.location.href = "/staff")}
-        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
-      >
-        Show
+onClick={() => router.push("/staff")}>view details
       </Button>
     </CardFooter>
   </Card>
@@ -68,11 +65,8 @@ const Dashboard = () => {
       </CardDescription>
     </CardHeader>
     <CardFooter className="flex justify-center">
-      <Button
-        onClick={() => (window.location.href = "/project")}
-        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
-      >
-        Show
+    <Button
+onClick={() => router.push("/project")}>view details
       </Button>
     </CardFooter>
   </Card>
@@ -91,11 +85,8 @@ const Dashboard = () => {
       </CardDescription>
     </CardHeader>
     <CardFooter className="flex justify-center">
-      <Button
-        onClick={() => (window.location.href = "/work")}
-        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
-      >
-        Show
+    <Button
+onClick={() => router.push("/work")}>view details
       </Button>
     </CardFooter>
   </Card>
@@ -114,12 +105,10 @@ const Dashboard = () => {
       </CardDescription>
     </CardHeader>
     <CardFooter className="flex justify-center">
-      <Button
-        onClick={() => (window.location.href = "/organization")}
-        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
-      >
-        Show
+    <Button
+onClick={() => router.push("/organization")}>view details
       </Button>
+     
     </CardFooter>
   </Card>
 
@@ -137,12 +126,10 @@ const Dashboard = () => {
       </CardDescription>
     </CardHeader>
     <CardFooter className="flex justify-center">
-      <Button
-        onClick={() => (window.location.href = "/contact")}
-        className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
-      >
-        Show
+    <Button
+onClick={() => router.push("/contact")}>view details
       </Button>
+     
     </CardFooter>
   </Card>
 </div>

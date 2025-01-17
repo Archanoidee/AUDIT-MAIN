@@ -12,6 +12,7 @@ import "boxicons";
 import ClientOnlyComponent from "@/app/components/ClientOnly";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
+
 import {
   Select,
   SelectContent,
@@ -34,6 +35,7 @@ const Toast = ({
         className="bg-red-500 text-white p-4 rounded-lg shadow-md"
         duration={5000}
       >
+        
         <ToastPrimitive.Title className="font-bold">
           {title}
         </ToastPrimitive.Title>
@@ -81,6 +83,10 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     if (id) {
       console.log("hai");
+
+
+   
+
 
       const fetchUserData = async () => {
         setLoading(true);
@@ -251,7 +257,6 @@ const ProfilePage: React.FC = () => {
             Documents
           </Button> */}
           </div>
-
           <div>
             <h3 className="text-xl font-semibold mb-6">Personal Information</h3>
 
@@ -295,7 +300,6 @@ const ProfilePage: React.FC = () => {
                         placeholder="Last Name"
                       />
                     </div>
-
                     <div>
                       <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                         Contact Number
@@ -378,7 +382,6 @@ const ProfilePage: React.FC = () => {
                       <label className="block text-sm font-medium mb-3 text-gray-900  tracking-wide">
                         Languages
                       </label>
-
                       <Select
                         value={formData.languages} // Current selected languages
                         onValueChange={(value) =>

@@ -6,9 +6,11 @@ import { Button } from "@/ui/ui/button";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { loginSignup } from "@/actions/user";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const router = useRouter(); // Use Next.js router for navigation
 
   const handleSubmit = async (formData: FormData) => {
     setLoading(true);
@@ -20,7 +22,7 @@ const Login = () => {
         toast({ title: res.error, variant: "destructive" });
       } else {
         toast({ title: "Login successful", variant: "default" });
-        window.location.href = "/main"; // Redirect manually after login
+        router.push("/main"); // Navigate to /main programmatically
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -48,7 +50,14 @@ const Login = () => {
         {/* Form Section */}
         <div className="flex flex-col justify-center gap-5 items-center py-10 px-5 w-[450px]">
           <h1 className="text-center font-bold text-4xl">Login</h1>
-          <form action={handleSubmit} className="w-full">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault(); // Prevent default form submission
+              const formData = new FormData(e.currentTarget);
+              handleSubmit(formData);
+            }}
+            className="w-full"
+          >
             <FormInput
               name="email"
               type="email"
@@ -72,7 +81,6 @@ const Login = () => {
               {loading ? "Loading..." : "Login"}
             </Button>
           </form>
-         
         </div>
       </div>
     </div>
